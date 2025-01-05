@@ -1,17 +1,19 @@
+import os
+import certifi
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from pymongo import MongoClient
-import os
-#hello 2345678
+
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app)
 
-# MongoDB connection
-client = MongoClient('mongodb+srv://bentuv:XVoMEML49itDKRmQ@elysiancluster.ltcol.mongodb.net/?retryWrites=true&w=majority&appName=ElysianCluster')
-db = client['elysian_db']  # Set your database name
-users_collection = db['users']
+mongo_uri = os.environ.get("MONGO_URI") or "mongodb+srv://bentuv:XVoMEML49itDKRmQ@elysiancluster.ltcol.mongodb.net/elysian_db?retryWrites=true&w=majority"
+client = MongoClient(mongo_uri, tls=True, tlsCAFile=certifi.where())
 
-@app.route('/api/login', methods=['POST'])
+db = client["elysian_db"]
+users_collection = db["users"]
+
+@app.route("/api/login", methods=["POST"])
 def login():
     try:
         data = request.json
