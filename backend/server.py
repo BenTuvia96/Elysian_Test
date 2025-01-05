@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from pymongo import MongoClient
-
+#hello
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
@@ -26,7 +26,7 @@ def login():
             print(f"User found in DB: {user}")
         else:
             print("no user was found")
-            
+
         if user and user['password'] == password:
             return jsonify({'message': 'Login successful', 'user': {'email': user['email']}}), 200
         else:
