@@ -31,7 +31,7 @@ export default function LoginScreen() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/api/login', {
+      const response = await axios.post('https://elysiantestbackpy-bcegckecarbvawh4.israelcentral-01.azurewebsites.net/api/login', {
         email,
         password,
       });
