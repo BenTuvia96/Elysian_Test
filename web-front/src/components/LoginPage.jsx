@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './LoginPage.css';
 import logo from '../assets/Logo.png';
 import illustration from '../assets/illustration-image.png';
@@ -43,6 +44,35 @@ const LoginPage = () => {
 
     // Check if both fields are filled
     const isFormValid = email.trim() !== '' && password.trim() !== '';
+
+    const handleLogin = async () => {
+        try {
+            const response = await axios.post(
+                'https://elysiantestbackpy-bcegckecarbvawh4.israelcentral-01.azurewebsites.net/api/login',
+                { email, password }
+            );
+            
+            // If login is successful, call Node endpoint
+            if (response.status === 200) {
+                try {
+                    const nodeResponse = await axios.post(
+                        'https://elysiannodeservertest-caajgchqdngsb7bw.israelcentral-01.azurewebsites.net/getRandomMessage'
+                    );
+                    console.log('Random welcome message:', nodeResponse.data.message);
+                    
+                    // Show welcome message
+                    alert(nodeResponse.data.message);
+                    
+                } catch (nodeError) {
+                    console.error('Error getting welcome message:', nodeError);
+                    alert('Could not fetch welcome message');
+                }
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            alert(error.response?.data?.message || 'An error occurred');
+        }
+    };
 
     return (
         <div className="login-container">
@@ -99,6 +129,7 @@ const LoginPage = () => {
                         <button 
                             className="login-btn" 
                             disabled={!isFormValid}
+                            onClick={handleLogin}
                         >
                             Log in
                         </button>

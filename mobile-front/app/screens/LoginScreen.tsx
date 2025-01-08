@@ -31,12 +31,25 @@ export default function LoginScreen() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('https://elysiantestbackpy-bcegckecarbvawh4.israelcentral-01.azurewebsites.net/api/login', {
-        email,
-        password,
-      });
-      console.log('Login successful:', response.data);
-      Alert.alert('Success', 'Login successful!');
+      const response = await axios.post(
+        'https://elysiantestbackpy-bcegckecarbvawh4.israelcentral-01.azurewebsites.net/api/login',
+        { email, password }
+      );
+      
+      // 2) If it's successful, call your Node endpoint:
+      if (response.status === 200) {
+        try {
+          const nodeResponse = await axios.post('https://elysiannodeservertest-caajgchqdngsb7bw.israelcentral-01.azurewebsites.net/getRandomMessage');
+          console.log('Random welcome message:', nodeResponse.data.message);
+      
+          // 3) Show it in an alert (or custom toast)
+          Alert.alert('Welcome!', nodeResponse.data.message);
+          
+        } catch (nodeError: any) {
+          console.error('Error getting welcome message:', nodeError);
+          Alert.alert('Oops', 'Could not fetch welcome message');
+        }
+      }
     } catch (error: any) {
       console.error('Login error:', error);
       Alert.alert('Login Failed', error.response?.data?.message || 'An error occurred');
