@@ -28,6 +28,10 @@ export default function LoginScreen() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isPressed, setIsPressed] = useState(false);
+
+  // Check if form is valid (same as web)
+  const isFormValid = email.trim() !== '' && password.trim() !== '';
 
   const handleLogin = async () => {
     try {
@@ -118,7 +122,15 @@ export default function LoginScreen() {
 
             {/* Buttons */}
             <View style={styles.buttonWrapper}>
-              <Pressable style={styles.primaryButton} onPress={handleLogin}>
+              <Pressable 
+                style={({ pressed }) => [
+                  styles.primaryButton,
+                  !isFormValid && styles.primaryButtonDisabled,
+                  pressed && isFormValid && styles.primaryButtonPressed,
+                ]}
+                onPress={handleLogin}
+                disabled={!isFormValid}
+              >
                 <Text style={styles.primaryButtonText}>Log in</Text>
               </Pressable>
 

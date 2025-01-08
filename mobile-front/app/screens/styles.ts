@@ -76,6 +76,26 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     justifyContent: 'center',
     alignItems: 'center',
+    // Add shadow for pressed effect
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  primaryButtonDisabled: {
+    backgroundColor: '#959bcc',
+    opacity: 0.7,
+    // Remove shadow when disabled
+    shadowColor: 'transparent',
+    elevation: 0,
+  },
+  primaryButtonPressed: {
+    backgroundColor: '#2d3eaa',
+    transform: [{ translateY: 2 }],
   },
   primaryButtonText: {
     color: '#FFFFFF',
