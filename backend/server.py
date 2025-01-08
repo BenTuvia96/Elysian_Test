@@ -7,7 +7,7 @@ from pymongo import MongoClient
 app = Flask(__name__)
 CORS(app)
 
-mongo_uri = os.environ.get("MONGO_URI") or "mongodb+srv://bentuv:XVoMEML49itDKRmQ@elysiancluster.ltcol.mongodb.net/elysian_db?retryWrites=true&w=majority"
+mongo_uri = os.environ.get("MONGO_URI") 
 client = MongoClient(mongo_uri, tls=True, tlsCAFile=certifi.where())
 
 db = client["elysian_db"]
